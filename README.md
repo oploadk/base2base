@@ -13,6 +13,8 @@ and need to convert binary from and to base36:
     local alphabet_b36 = base2base.ALPHABET_B62:sub(1,36)
     local from_b36 = base2base.converter(alphabet_b36, base2base.ALPHABET_B256)
     local to_b36 = base2base.converter(base2base.ALPHABET_B256, alphabet_b36)
+    local bin = from_b36("yolo42")
+    assert(to_b36(bin) == "yolo42")
 
 ## Copyright
 
