@@ -1,3 +1,5 @@
+local fmt = string.format
+
 local next_power = function(p, base_from, base_to)
     local r, j, t = {}
     for i = 1, #p do
@@ -81,10 +83,31 @@ local figures = "0123456789"
 local ascii = {}; for i = 1, 256 do ascii[i] = i - 1 end
 local ALPHABET_B64 = letters:upper() .. letters .. figures .. "+/"
 
-return {
+local _byte_to_hex = function(x) return fmt("%02x", x:byte()) end
+local to_hex = function(s) return (s:gsub("(.)", _byte_to_hex)) end
+local _byte_from_hex = function(x) return string.char(tonumber(x, 16)) end
+local from_hex = function(s) return (s:gsub("(..)", _byte_from_hex)) end
+
+local mt = {
+    __index = function(t, k)
+        if k == "ALPHABET_B36" then
+            t[k] = t.ALPHABET_B62:sub(1,36)
+        elseif k == "to_b36" then
+            t[k] = t.converter(t.ALPHABET_B256, t.ALPHABET_B36)
+        elseif k == "from_b36" then
+            t[k] = t.converter(t.ALPHABET_B36, t.ALPHABET_B256)
+        end
+        return rawget(t, k)
+    end
+}
+
+local M = {
     converter = new_converter,
     ALPHABET_B62 = figures .. letters .. letters:upper(),
     ALPHABET_B64 = ALPHABET_B64,
     ALPHABET_B64URL = ALPHABET_B64:sub(1, 62) .. "-_",
     ALPHABET_B256 = string.char(table.unpack(ascii)),
+    to_hex = to_hex, from_hex = from_hex,
 }
+
+return setmetatable(M, mt)
