@@ -26,6 +26,11 @@ There are also helpers for base36, so you can do this:
     local bin = base2base.from_b36("yolo42")
     assert(base2base.to_b36(bin) == "yolo42")
 
+Finally, there are helpers for padded base64:
+
+    base2base.to_b64("Ma") -- "TWE="
+    base2base.from_b64("TWE=") -- "Ma"
+
 ## Copyright
 
 Copyright (c) 2016 Pierre Chapuis
