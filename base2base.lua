@@ -108,7 +108,6 @@ local _to_b64 = function()
     local c = new_converter(ALPHABET_B256, ALPHABET_B64)
     return function(s)
         local l, n = #s, 0
-        local n = l % 3
         if l % 3 == 1 then
             n = 2
             s = s .. "\0\0"
