@@ -26,12 +26,29 @@ local base64_examples = {
     ["YW55IGNhcm5hbCBwbGVhc3Vy"] = "any carnal pleasur",
     ["YW55IGNhcm5hbCBwbGVhc3U="] = "any carnal pleasu",
     ["YW55IGNhcm5hbCBwbGVhcw=="] = "any carnal pleas",
+    ["+w=="] = string.char(251),
+    ["/g=="] = string.char(254),
 }
 
 T:start("base64", 18); do
     for k, v in pairs(base64_examples) do
         T:eq( M.from_b64(k), v )
         T:eq( M.to_b64(v), k )
+    end
+end; T:done()
+
+local base64Url_examples = {
+    ["-w=="] = string.char(251),
+    ["_g=="] = string.char(254),
+}
+for k,v in pairs(base64_examples) do base64Url_examples[k] = v end
+base64Url_examples["+w=="] = nil
+base64Url_examples["/g=="] = nil
+
+T:start("base64Url", 18); do
+    for k, v in pairs(base64Url_examples) do
+        T:eq( M.from_b64Url(k), v )
+        T:eq( M.to_b64Url(v), k )
     end
 end; T:done()
 
