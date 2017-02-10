@@ -1,5 +1,7 @@
 # base2base
 
+[![Build Status](https://travis-ci.org/catwell/base2base.png?branch=master)](https://travis-ci.org/catwell/base2base)
+
 ## Presentation
 
 Convert strings representing numbers between different bases.
@@ -32,10 +34,12 @@ There are also helpers for base36, so you can do this:
     local bin = base2base.from_b36("yolo42")
     assert(base2base.to_b36(bin) == "yolo42")
 
-Finally, there are helpers for padded base64:
+Finally, there are helpers for padded base64 and its base64 URL variant:
 
     base2base.to_b64("Ma") -- "TWE="
     base2base.from_b64("TWE=") -- "Ma"
+    base2base.to_b64url("Ma") -- "TWE="
+    base2base.from_b64url("TWE=") -- "Ma"
 
 ## Copyright
 
