@@ -146,7 +146,7 @@ local M = {
     ALPHABET_B256 = ALPHABET_B256,
     to_hex = to_hex, from_hex = from_hex,
     to_b64 = _to_b64(ALPHABET_B64), from_b64 = _from_b64(ALPHABET_B64),
-    to_b64Url = _to_b64(ALPHABET_B64URL), from_b64Url = _from_b64(ALPHABET_B64URL),
+    to_b64url = _to_b64(ALPHABET_B64URL), from_b64url = _from_b64(ALPHABET_B64URL),
 }
 
 return setmetatable(M, mt)

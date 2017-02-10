@@ -44,8 +44,8 @@ base64Url_examples[string.char(254)] = "_g=="
 
 T:start("base64Url", 18); do
     for k, v in pairs(base64Url_examples) do
-        T:eq( M.from_b64Url(v), k )
-        T:eq( M.to_b64Url(k), v )
+        T:eq( M.from_b64url(v), k )
+        T:eq( M.to_b64url(k), v )
     end
 end; T:done()
 
