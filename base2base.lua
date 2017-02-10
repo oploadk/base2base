@@ -83,14 +83,15 @@ local figures = "0123456789"
 local ascii = {}; for i = 1, 256 do ascii[i] = i - 1 end
 local ALPHABET_B64 = letters:upper() .. letters .. figures .. "+/"
 local ALPHABET_B256 = string.char(table.unpack(ascii))
+local ALPHABET_B64URL = ALPHABET_B64:sub(1, 62) .. "-_"
 
 local _byte_to_hex = function(x) return fmt("%02x", x:byte()) end
 local to_hex = function(s) return (s:gsub("(.)", _byte_to_hex)) end
 local _byte_from_hex = function(x) return string.char(tonumber(x, 16)) end
 local from_hex = function(s) return (s:gsub("(..)", _byte_from_hex)) end
 
-local _from_b64 = function()
-    local c = new_converter(ALPHABET_B64, ALPHABET_B256)
+local _from_b64 = function(alphabet)
+    local c = new_converter(alphabet, ALPHABET_B256)
     return function(s)
         local n = 0
         if s:sub(-2, -1) == "==" then
@@ -104,8 +105,8 @@ local _from_b64 = function()
     end
 end
 
-local _to_b64 = function()
-    local c = new_converter(ALPHABET_B256, ALPHABET_B64)
+local _to_b64 = function(alphabet)
+    local c = new_converter(ALPHABET_B256, alphabet)
     return function(s)
         local l, n = #s, 0
         if l % 3 == 1 then
@@ -141,10 +142,11 @@ local M = {
     converter = new_converter,
     ALPHABET_B62 = figures .. letters .. letters:upper(),
     ALPHABET_B64 = ALPHABET_B64,
-    ALPHABET_B64URL = ALPHABET_B64:sub(1, 62) .. "-_",
+    ALPHABET_B64URL = ALPHABET_B64URL,
     ALPHABET_B256 = ALPHABET_B256,
     to_hex = to_hex, from_hex = from_hex,
-    to_b64 = _to_b64(), from_b64 = _from_b64(),
+    to_b64 = _to_b64(ALPHABET_B64), from_b64 = _from_b64(ALPHABET_B64),
+    to_b64url = _to_b64(ALPHABET_B64URL), from_b64url = _from_b64(ALPHABET_B64URL),
 }
 
 return setmetatable(M, mt)

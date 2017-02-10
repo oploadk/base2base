@@ -18,20 +18,34 @@ end; T:done()
 
 local base64_examples = {
     [""] = "",
-    ["TQ=="] = "M",
-    ["TWE="] = "Ma",
-    ["TWFu"] = "Man",
-    ["YW55IGNhcm5hbCBwbGVhc3VyZS4="] = "any carnal pleasure.",
-    ["YW55IGNhcm5hbCBwbGVhc3VyZQ=="] = "any carnal pleasure",
-    ["YW55IGNhcm5hbCBwbGVhc3Vy"] = "any carnal pleasur",
-    ["YW55IGNhcm5hbCBwbGVhc3U="] = "any carnal pleasu",
-    ["YW55IGNhcm5hbCBwbGVhcw=="] = "any carnal pleas",
+    ["M"] = "TQ==",
+    ["Ma"] = "TWE=",
+    ["Man"] = "TWFu",
+    ["any carnal pleasure."] = "YW55IGNhcm5hbCBwbGVhc3VyZS4=",
+    ["any carnal pleasure"] = "YW55IGNhcm5hbCBwbGVhc3VyZQ==",
+    ["any carnal pleasur"] = "YW55IGNhcm5hbCBwbGVhc3Vy",
+    ["any carnal pleasu"] = "YW55IGNhcm5hbCBwbGVhc3U=",
+    ["any carnal pleas"] = "YW55IGNhcm5hbCBwbGVhcw==",
+    [string.char(251)] = "+w==",
+    [string.char(254)] = "/g==",
 }
 
 T:start("base64", 18); do
     for k, v in pairs(base64_examples) do
-        T:eq( M.from_b64(k), v )
-        T:eq( M.to_b64(v), k )
+        T:eq( M.from_b64(v), k )
+        T:eq( M.to_b64(k), v )
+    end
+end; T:done()
+
+local base64Url_examples = {}
+for k,v in pairs(base64_examples) do base64Url_examples[k] = v end
+base64Url_examples[string.char(251)] = "-w=="
+base64Url_examples[string.char(254)] = "_g=="
+
+T:start("base64Url", 18); do
+    for k, v in pairs(base64Url_examples) do
+        T:eq( M.from_b64url(v), k )
+        T:eq( M.to_b64url(k), v )
     end
 end; T:done()
 
