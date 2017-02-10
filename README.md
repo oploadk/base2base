@@ -4,6 +4,12 @@
 
 Convert strings representing numbers between different bases.
 
+## Dependencies
+
+None except Lua 5.3.
+
+Tests require [cwtest](https://github.com/catwell/cwtest).
+
 ## Usage
 
 You should not use base36. But let's say you have legacy code to work with
@@ -33,4 +39,4 @@ Finally, there are helpers for padded base64:
 
 ## Copyright
 
-Copyright (c) 2016 Pierre Chapuis
+Copyright (c) 2016-2017 Pierre Chapuis
