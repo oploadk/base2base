@@ -49,4 +49,13 @@ T:start("base64 URL", 18); do
     end
 end; T:done()
 
+T:start("validation", 6); do
+    T:yes( M.is_hex("") )
+    T:yes( M.is_b36("f00b41") )
+    T:no( M.is_hex("f00b4r") )
+    T:yes( M.is_b36("") )
+    T:yes( M.is_b36("f00b4r") )
+    T:no( M.is_b36("f00+b4r") )
+end; T:done()
+
 T:exit()

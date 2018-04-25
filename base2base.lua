@@ -60,8 +60,17 @@ local convert = function(self, s)
     return t_to_s(self, base_convert(self, s_to_t(self, s)))
 end
 
+local validate = function(self, s)
+    for i = 1, #s do
+        if not self.r_alpha_from[s:byte(i)] then
+            return false
+        end
+    end
+    return true
+end
+
 local converter_mt = {
-    __index = {convert = convert},
+    __index = {convert = convert, validate = validate},
     __call = function(self, s) return self:convert(s) end,
 }
 
@@ -89,6 +98,8 @@ local _byte_to_hex = function(x) return fmt("%02x", x:byte()) end
 local to_hex = function(s) return (s:gsub("(.)", _byte_to_hex)) end
 local _byte_from_hex = function(x) return string.char(tonumber(x, 16)) end
 local from_hex = function(s) return (s:gsub("(..)", _byte_from_hex)) end
+
+local is_hex = function(s) return not not s:match("^[0-9a-f]*$") end
 
 local _from_b64 = function(alphabet)
     local c = new_converter(alphabet, ALPHABET_B256)
@@ -133,6 +144,8 @@ local mt = {
             t[k] = t.converter(t.ALPHABET_B256, t.ALPHABET_B36)
         elseif k == "from_b36" then
             t[k] = t.converter(t.ALPHABET_B36, t.ALPHABET_B256)
+        elseif k == "is_b36" then
+            t[k] = function(s) return t.from_b36:validate(s) end
         end
         return rawget(t, k)
     end
@@ -144,7 +157,7 @@ local M = {
     ALPHABET_B64 = ALPHABET_B64,
     ALPHABET_B64URL = ALPHABET_B64URL,
     ALPHABET_B256 = ALPHABET_B256,
-    to_hex = to_hex, from_hex = from_hex,
+    to_hex = to_hex, from_hex = from_hex, is_hex = is_hex,
     to_b64 = _to_b64(ALPHABET_B64), from_b64 = _from_b64(ALPHABET_B64),
     to_b64url = _to_b64(ALPHABET_B64URL), from_b64url = _from_b64(ALPHABET_B64URL),
 }
