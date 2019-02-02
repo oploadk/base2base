@@ -1,26 +1,18 @@
 language: c
 
-sudo: false
-
-env:
-  global:
-    - LUAROCKS=2.4.0
-  matrix:
-    - LUA=lua5.3
-
 branches:
   only:
     - master
 
 before_install:
-  - source .travis/setenv_lua.sh
+  - curl -O https://loadk.com/localua.sh
+  - bash localua.sh localua
 
 install:
-  - luarocks install penlight
-  - luarocks install cwtest
+  - ./localua/bin/luarocks install cwtest
 
 script:
-  - lua base2base.test.lua
+  - ./localua/bin/lua base2base.test.lua
 
 notifications:
   email:

@@ -2,7 +2,7 @@ package = "base2base"
 version = "1.0-1"
 
 source = {
-    url = "git://github.com/catwell/base2base.git",
+    url = "git://github.com/oploadk/base2base.git",
     branch = "v1.0",
 }
 
@@ -11,7 +11,7 @@ description = {
     detailed = [[
         Convert strings representing numbers between different bases.
     ]],
-    homepage = "http://github.com/catwell/base2base",
+    homepage = "http://github.com/oploadk/base2base",
     license = "MIT/X11",
 }
 
