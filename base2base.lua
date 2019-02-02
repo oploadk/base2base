@@ -1,6 +1,6 @@
 local fmt = string.format
 
-local next_power = function(p, base_from, base_to)
+local function next_power(p, base_from, base_to)
     local r, j, t = {}
     for i = 1, #p do
         j, t = i, p[i] * base_from
@@ -16,7 +16,7 @@ local next_power = function(p, base_from, base_to)
 end
 
 -- a = a + n * b
-local add_times = function(a, n, b, base)
+local function add_times(a, n, b, base)
     local j, t
     for i = 1, #b do
         j, t = i, n * (b[i] or 0)
@@ -30,25 +30,25 @@ local add_times = function(a, n, b, base)
     end
 end
 
-local s_to_t = function(self, s)
+local function s_to_t(self, s)
     local r, l = {}, #s
     for i = 1, l do r[i] = self.r_alpha_from[s:byte(l - i + 1)] end
     return r
 end
 
-local t_to_s = function(self, t)
+local function t_to_s(self, t)
     local r, l = {}, #t
     for i = l, 1, -1 do r[l - i + 1] = self.alpha_to:byte(t[i] + 1) end
     return string.char(table.unpack(r))
 end
 
-local get_power; get_power = function(self, n)
+local function get_power(self, n)
     return self.power[n] or next_power(
         get_power(self, n-1), self.base_from, self.base_to
     )
 end
 
-local base_convert = function(self, t)
+local function base_convert(self, t)
     local r = {}
     for i = 1, #t do
         add_times(r, t[i], get_power(self, i - 1), self.base_to)
@@ -56,11 +56,11 @@ local base_convert = function(self, t)
     return r
 end
 
-local convert = function(self, s)
+local function convert(self, s)
     return t_to_s(self, base_convert(self, s_to_t(self, s)))
 end
 
-local validate = function(self, s)
+local function validate(self, s)
     for i = 1, #s do
         if not self.r_alpha_from[s:byte(i)] then
             return false
@@ -74,7 +74,7 @@ local converter_mt = {
     __call = function(self, s) return self:convert(s) end,
 }
 
-local new_converter = function(alpha_from, alpha_to)
+local function new_converter(alpha_from, alpha_to)
     local self = {
         alpha_to = alpha_to,
         base_from = #alpha_from,
@@ -94,14 +94,14 @@ local ALPHABET_B64 = letters:upper() .. letters .. figures .. "+/"
 local ALPHABET_B256 = string.char(table.unpack(ascii))
 local ALPHABET_B64URL = ALPHABET_B64:sub(1, 62) .. "-_"
 
-local _byte_to_hex = function(x) return fmt("%02x", x:byte()) end
-local to_hex = function(s) return (s:gsub("(.)", _byte_to_hex)) end
-local _byte_from_hex = function(x) return string.char(tonumber(x, 16)) end
-local from_hex = function(s) return (s:gsub("(..)", _byte_from_hex)) end
+local function _byte_to_hex(x) return fmt("%02x", x:byte()) end
+local function to_hex(s) return (s:gsub("(.)", _byte_to_hex)) end
+local function _byte_from_hex(x) return string.char(tonumber(x, 16)) end
+local function from_hex(s) return (s:gsub("(..)", _byte_from_hex)) end
 
-local is_hex = function(s) return not not s:match("^[0-9a-f]*$") end
+local function is_hex(s) return not not s:match("^[0-9a-f]*$") end
 
-local _from_b64 = function(alphabet)
+local function _from_b64(alphabet)
     local c = new_converter(alphabet, ALPHABET_B256)
     return function(s)
         local n = 0
@@ -116,7 +116,7 @@ local _from_b64 = function(alphabet)
     end
 end
 
-local _to_b64 = function(alphabet)
+local function _to_b64(alphabet)
     local c = new_converter(ALPHABET_B256, alphabet)
     return function(s)
         local l, n = #s, 0
