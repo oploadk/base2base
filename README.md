@@ -53,4 +53,4 @@ There are no `is_*` validation helpers for base64.
 
 ## Copyright
 
-Copyright (c) 2016-2019 Pierre Chapuis
+Copyright (c) 2016-2022 Pierre Chapuis

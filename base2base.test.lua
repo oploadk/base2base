@@ -30,7 +30,7 @@ local base64_examples = {
     [string.char(254)] = "/g==",
 }
 
-T:start("base64", 18); do
+T:start("base64", 22); do
     for k, v in pairs(base64_examples) do
         T:eq( M.from_b64(v), k )
         T:eq( M.to_b64(k), v )
@@ -42,7 +42,7 @@ for k,v in pairs(base64_examples) do base64url_examples[k] = v end
 base64url_examples[string.char(251)] = "-w=="
 base64url_examples[string.char(254)] = "_g=="
 
-T:start("base64 URL", 18); do
+T:start("base64 URL", 22); do
     for k, v in pairs(base64url_examples) do
         T:eq( M.from_b64url(v), k )
         T:eq( M.to_b64url(k), v )
