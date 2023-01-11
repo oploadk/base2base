@@ -1,6 +1,6 @@
 # base2base
 
-[![Build Status](https://travis-ci.org/catwell/base2base.png?branch=master)](https://travis-ci.org/catwell/base2base)
+![CI Status](https://github.com/oploadk/base2base/actions/workflows/ci.yml/badge.svg?branch=master)
 
 ## Presentation
 

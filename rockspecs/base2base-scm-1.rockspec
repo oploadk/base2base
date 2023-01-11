@@ -1,3 +1,5 @@
+rockspec_format = "3.0"
+
 package = "base2base"
 version = "scm-1"
 
@@ -20,4 +22,13 @@ build = {
     type = "none",
     install = { lua = {base2base = "base2base.lua"} },
     copy_directories = {},
+}
+
+test_dependencies = {
+    "cwtest",
+}
+
+test = {
+   type = "command",
+   script = "base2base.test.lua",
 }
