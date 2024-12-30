@@ -1,7 +1,7 @@
 rockspec_format = "3.0"
 
 package = "base2base"
-version = "scm-1"
+version = "scm-2"
 
 source = {
     url = "git://github.com/oploadk/base2base.git",
