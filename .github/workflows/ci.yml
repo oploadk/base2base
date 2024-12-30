@@ -16,9 +16,10 @@ jobs:
           chmod +x localua.sh
           ./localua.sh .lua "${{ matrix.lua-version }}"
 
-      - name: install Teal
+      - name: install dependencies
         run: |
           ./.lua/bin/luarocks install tl
+          ./.lua/bin/luarocks install cwtest
 
       - name: run tests
         run: |
