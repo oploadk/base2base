@@ -8,7 +8,7 @@ source = {
 }
 
 description = {
-    summary = "A base-to-base converter",
+    summary = "A Teal / Lua base-to-base converter",
     detailed = [[
         Convert strings representing numbers between different bases.
     ]],
@@ -19,16 +19,8 @@ description = {
 dependencies = { "lua >= 5.3" }
 
 build = {
-    type = "none",
-    install = { lua = {base2base = "base2base.lua"} },
+    type = "builtin",
+    modules = { base2base = "base2base.lua" },
+    install = { lua = { base2base = "base2base.tl" } },
     copy_directories = {},
-}
-
-test_dependencies = {
-    "cwtest",
-}
-
-test = {
-   type = "command",
-   script = "base2base.test.lua",
 }

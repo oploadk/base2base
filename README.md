@@ -8,7 +8,7 @@ Convert strings representing numbers between different bases.
 
 ## Dependencies
 
-None except Lua 5.3.
+None except Teal or Lua 5.3+.
 
 Tests require [cwtest](https://github.com/catwell/cwtest).
 
@@ -53,4 +53,4 @@ There are no `is_*` validation helpers for base64.
 
 ## Copyright
 
-Copyright (c) 2016-2022 Pierre Chapuis
+Copyright (c) Pierre Chapuis

@@ -16,7 +16,7 @@ T:start("base36", 3); do
     T:eq( M.to_b36(M.from_b36("yolo42")), "yolo42" )
 end; T:done()
 
-local base64_examples = {
+local base64_examples: {string: string} = {
     [""] = "",
     ["M"] = "TQ==",
     ["Ma"] = "TWE=",
